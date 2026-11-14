@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baozi Store - Sistema de Controle</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        header { background-color: #343a40; color: white; padding: 20px 0; margin-bottom: 30px; }
+        .resultado-busca { font-size: 0.85rem; background: #e9ecef; padding: 8px; border-radius: 5px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header class="text-center">
+        <div class="container">
+            <h1> Baozi Store</h1>
+            <p class="lead">Sistema de Gestão de Clientes, Produtos e Pedidos (CRUD Completo)</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            
+            <!-- ================= CLIENTES ================= -->
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h3>Clientes</h3>
+                    <form id="formCliente" class="mb-3">
+                        <div class="mb-2">
+                            <label class="form-label">Nome:</label>
+                            <input type="text" id="nomeCliente" class="form-control" placeholder="Ex: Rodrigo S.S" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Cliente Desde:</label>
+                            <input type="date" id="dataCliente" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Cadastrar Cliente</button>
+                    </form>
+
+                    <hr>
+                    <!-- GET por ID -->
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Buscar Cliente por ID:</label>
+                        <div class="input-group">
+                            <input type="number" id="buscaClienteId" class="form-control" placeholder="ID">
+                            <button class="btn btn-outline-primary" onclick="buscarClientePorId()">Buscar</button>
+                        </div>
+                        <div id="resultadoBuscaCliente" class="resultado-busca d-none"></div>
+                    </div>
+
+                    <hr>
+                    <h5>Lista de Clientes</h5>
+                    <button class="btn btn-sm btn-outline-secondary mb-2" onclick="carregarClientes()">Atualizar Lista</button>
+                    <ul id="listaClientes" class="list-group"></ul>
+                </div>
+            </div>
+
+            <!-- ================= PRODUTOS ================= -->
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h3>Produtos</h3>
+                    <form id="formProduto" class="mb-3">
+                        <div class="mb-2">
+                            <label class="form-label">Nome do Produto:</label>
+                            <input type="text" id="nomeProduto" class="form-control" placeholder="Ex: Baozi de Carne" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Preço (R$):</label>
+                            <input type="number" step="0.01" id="precoProduto" class="form-control" placeholder="14.90" required>
+                        </div>
+                        <div class="mb-2 form-check">
+                            <input type="checkbox" id="estoqueProduto" class="form-check-input" checked>
+                            <label class="form-check-label">Em Estoque</label>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Cadastrar Produto</button>
+                    </form>
+
+                    <hr>
+                    <!-- GET por ID -->
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Buscar Produto por ID:</label>
+                        <div class="input-group">
+                            <input type="number" id="buscaProdutoId" class="form-control" placeholder="ID">
+                            <button class="btn btn-outline-success" onclick="buscarProdutoPorId()">Buscar</button>
+                        </div>
+                        <div id="resultadoBuscaProduto" class="resultado-busca d-none"></div>
+                    </div>
+
+                    <hr>
+                    <h5>Lista de Produtos</h5>
+                    <button class="btn btn-sm btn-outline-secondary mb-2" onclick="carregarProdutos()">Atualizar Lista</button>
+                    <ul id="listaProdutos" class="list-group"></ul>
+                </div>
+            </div>
+
+            <!-- ================= PEDIDOS ================= -->
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h3>Pedidos</h3>
+                    <form id="formPedido" class="mb-3">
+                        <div class="mb-2">
+                            <label class="form-label">ID do Cliente:</label>
+                            <input type="number" id="pedidoClienteId" class="form-control" placeholder="Ex: 1" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">ID do Produto:</label>
+                            <input type="number" id="pedidoProdutoId" class="form-control" placeholder="Ex: 1" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Quantidade:</label>
+                            <input type="number" id="pedidoQuantidade" class="form-control" value="1" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 text-white">Registrar Pedido</button>
+                    </form>
+
+                    <hr>
+                    <!-- GET por ID -->
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Buscar Pedido por ID:</label>
+                        <div class="input-group">
+                            <input type="number" id="buscaPedidoId" class="form-control" placeholder="ID">
+                            <button class="btn btn-outline-warning text-dark" onclick="buscarPedidoPorId()">Buscar</button>
+                        </div>
+                        <div id="resultadoBuscaPedido" class="resultado-busca d-none"></div>
+                    </div>
+
+                    <hr>
+                    <h5>Lista de Pedidos</h5>
+                    <button class="btn btn-sm btn-outline-secondary mb-2" onclick="carregarPedidos()">Atualizar Lista</button>
+                    <ul id="listaPedidos" class="list-group"></ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript para interagir com todos os endpoints (POST, GET, DELETE) -->
+    <script>
+        const API_URL = 'http://localhost:8081';
+
+        window.onload = function() {
+            carregarClientes();
+            carregarProdutos();
+            carregarPedidos();
+        };
+
+        // ================= CLIENTES =================
+        document.getElementById('formCliente').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const cliente = {
+                nome: document.getElementById('nomeCliente').value,
+                clienteDesde: document.getElementById('dataCliente').value
+            };
+            await fetch(`${API_URL}/clientes`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cliente)
+            });
+            document.getElementById('formCliente').reset();
+            carregarClientes();
+        });
+
+        async function carregarClientes() {
+            const res = await fetch(`${API_URL}/clientes`);
+            const clientes = await res.json();
+            const lista = document.getElementById('listaClientes');
+            lista.innerHTML = '';
+            clientes.forEach(c => {
+                lista.innerHTML += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>ID ${c.id}: <b>${c.nome}</b> (${c.clienteDesde})</span>
+                        <button class="btn btn-sm btn-danger" onclick="deletarCliente(${c.id})">Excluir</button>
+                    </li>`;
+            });
+        }
+
+        async function buscarClientePorId() {
+            const id = document.getElementById('buscaClienteId').value;
+            const div = document.getElementById('resultadoBuscaCliente');
+            if(!id) return;
+            const res = await fetch(`${API_URL}/clientes/${id}`);
+            if(res.ok) {
+                const c = await res.json();
+                div.innerHTML = `<b>Encontrado:</b> ID ${c.id} - ${c.nome} (${c.clienteDesde})`;
+                div.classList.remove('d-none');
+            } else {
+                div.innerHTML = `Cliente com ID ${id} não encontrado.`;
+                div.classList.remove('d-none');
+            }
+        }
+
+        async function deletarCliente(id) {
+            if(confirm(`Tem certeza que deseja apagar o cliente ID ${id}?`)) {
+                await fetch(`${API_URL}/clientes/${id}`, { method: 'DELETE' });
+                carregarClientes();
+            }
+        }
+
+        // ================= PRODUTOS =================
+        document.getElementById('formProduto').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const produto = {
+                nome: document.getElementById('nomeProduto').value,
+                preco: parseFloat(document.getElementById('precoProduto').value),
+                estoque: document.getElementById('estoqueProduto').checked
+            };
+            await fetch(`${API_URL}/produtos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(produto)
+            });
+            document.getElementById('formProduto').reset();
+            carregarProdutos();
+        });
+
+        async function carregarProdutos() {
+            const res = await fetch(`${API_URL}/produtos`);
+            const produtos = await res.json();
+            const lista = document.getElementById('listaProdutos');
+            lista.innerHTML = '';
+            produtos.forEach(p => {
+                lista.innerHTML += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>ID ${p.id}: <b>${p.nome}</b> - R$ ${p.preco}</span>
+                        <button class="btn btn-sm btn-danger" onclick="deletarProduto(${p.id})">Excluir</button>
+                    </li>`;
+            });
+        }
+
+        async function buscarProdutoPorId() {
+            const id = document.getElementById('buscaProdutoId').value;
+            const div = document.getElementById('resultadoBuscaProduto');
+            if(!id) return;
+            const res = await fetch(`${API_URL}/produtos/${id}`);
+            if(res.ok) {
+                const p = await res.json();
+                div.innerHTML = `<b>Encontrado:</b> ID ${p.id} - ${p.nome} (R$ ${p.preco})`;
+                div.classList.remove('d-none');
+            } else {
+                div.innerHTML = `Produto com ID ${id} não encontrado.`;
+                div.classList.remove('d-none');
+            }
+        }
+
+        async function deletarProduto(id) {
+            if(confirm(`Tem certeza que deseja apagar o produto ID ${id}?`)) {
+                await fetch(`${API_URL}/produtos/${id}`, { method: 'DELETE' });
+                carregarProdutos();
+            }
+        }
+
+        // ================= PEDIDOS =================
+        document.getElementById('formPedido').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const pedido = {
+                cliente: { id: parseInt(document.getElementById('pedidoClienteId').value) },
+                produto: { id: parseInt(document.getElementById('pedidoProdutoId').value) },
+                quantidade: parseInt(document.getElementById('pedidoQuantidade').value)
+            };
+            await fetch(`${API_URL}/pedidos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pedido)
+            });
+            document.getElementById('formPedido').reset();
+            carregarPedidos();
+        });
+
+        async function carregarPedidos() {
+            const res = await fetch(`${API_URL}/pedidos`);
+            const pedidos = await res.json();
+            const lista = document.getElementById('listaPedidos');
+            lista.innerHTML = '';
+            pedidos.forEach(p => {
+                const nomeCliente = p.cliente ? p.cliente.nome : 'Desconhecido';
+                const nomeProduto = p.produto ? p.produto.nome : 'Desconhecido';
+                lista.innerHTML += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Pedido #${p.id}: ${p.quantidade}x ${nomeProduto} (Cliente: ${nomeCliente})</span>
+                        <button class="btn btn-sm btn-danger" onclick="deletarPedido(${p.id})">Excluir</button>
+                    </li>`;
+            });
+        }
+
+        async function buscarPedidoPorId() {
+            const id = document.getElementById('buscaPedidoId').value;
+            const div = document.getElementById('resultadoBuscaPedido');
+            if(!id) return;
+            const res = await fetch(`${API_URL}/pedidos/${id}`);
+            if(res.ok) {
+                const p = await res.json();
+                const nomeC = p.cliente ? p.cliente.nome : 'N/D';
+                const nomeP = p.produto ? p.produto.nome : 'N/D';
+                div.innerHTML = `<b>Encontrado:</b> Pedido #${p.id} - ${p.quantidade}x ${nomeP} (${nomeC})`;
+                div.classList.remove('d-none');
+            } else {
+                div.innerHTML = `Pedido com ID ${id} não encontrado.`;
+                div.classList.remove('d-none');
+            }
+        }
+
+        async function deletarPedido(id) {
+            if(confirm(`Tem certeza que deseja apagar o pedido ID ${id}?`)) {
+                await fetch(`${API_URL}/pedidos/${id}`, { method: 'DELETE' });
+                carregarPedidos();
+            }
+        }
+    </script>
+</body>
+</html>
