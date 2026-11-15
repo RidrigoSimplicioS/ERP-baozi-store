@@ -147,4 +147,4 @@ Com o servidor Spring Boot em execução no Eclipse, você também pode visualiz
 
 ##  Autor
 
-* **Rodrigo Simplicio** - [GitHub](https://github.com)
+* **Rodrigo Simplicio** - [GitHub](https://github.com | [https://github.com/RidrigoSimplicioS/ERP-baozi-store]
