@@ -31,7 +31,7 @@ Projeto acadêmico desenvolvido para a disciplina de **Desenvolvimento Back-end*
 
 ---
 
-## 🏗️ Arquitetura e Estrutura do Projeto
+##  Arquitetura e Estrutura do Projeto
 
 O projeto está estruturado no padrão **MVC**, separando responsabilidades entre controladores, entidades de domínio e repositórios de acesso a dados:
 
