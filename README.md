@@ -75,7 +75,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 ### 1. Clonar o repositório
 Abra o terminal e execute o comando abaixo para baixar o projeto:
 ```bash
-git clone https://github.com
+git clone [https://github.com/RidrigoSimplicioS/ERP-baozi-store.git]
 ```
 
 ### 2. Configurar o Banco de Dados (MySQL)
